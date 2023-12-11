@@ -6,7 +6,7 @@ import { HexColorPicker } from "react-colorful";
 interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
-  const { canvasRef, onMouseDown } = useDrawn(drawLine);
+  const { canvasRef, onMouseDown, clear } = useDrawn(drawLine);
   const [color, setColor] = useState("#000");
 
   function drawLine({ ctx, currentPoint, previousPoint }: Draw) {
@@ -29,7 +29,17 @@ const Page: FC<pageProps> = ({}) => {
 
   return (
     <div className="w-screen h-screen bg-white flex justify-center items-center">
-      <HexColorPicker color={color} onChange={setColor} />
+      <div className="flex flex-col gap-10 pr-10">
+        <HexColorPicker color={color} onChange={setColor} />
+        <button
+          type="button"
+          onClick={clear}
+          className="p-2 rounded-md border border-black"
+        >
+          Clear Canvas
+        </button>
+      </div>
+
       <canvas
         onMouseDown={onMouseDown}
         ref={canvasRef}
